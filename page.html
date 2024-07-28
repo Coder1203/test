@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বই পাঠক</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Noto Serif Bengali', serif;
+    background-color: #e8d8b7;
+    color: #3a2f23;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+}
+.book-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    background: #f9f3e3;
+    box-shadow: 0 0 20px rgba(58, 47, 35, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    perspective: 2000px;
+    border: 2px solid #8b7d6b;
+}
+.page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 2s ease;
+    background: linear-gradient(to right, #f9f3e3 0%, #fff8e7 10%, #fff8e7 90%, #f9f3e3 100%);
+    border-right: 1px solid #d4c3a3;
+}
+.page-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    backface-visibility: hidden;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.page-back {
+    transform: rotateY(180deg);
+}
+.page.flipped {
+    transform: rotateY(-180deg);
+}
+.page-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #8b7d6b;
+    padding-bottom: 10px;
+}
+h1 {
+    font-weight: 700;
+    color: #3a2f23;
+    font-size: 1.8rem;
+    text-shadow: 1px 1px 2px rgba(58, 47, 35, 0.1);
+}
+.subheading {
+    font-style: italic;
+    color: #6b5b47;
+    font-size: 1rem;
+}
+.content {
+    flex-grow: 1;
+    text-align: justify;
+    font-size: 1.1rem;
+    letter-spacing: .01em;
+    overflow: hidden;
+    color: #3a2f23;
+}
+.content p {
+    margin-bottom: 1rem;
+}
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+.nav-button {
+    padding: 8px 16px;
+    background-color: #8b7d6b;
+    color: #f9f3e3;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color .3s;
+    font-size: 1rem;
+}
+.nav-button:hover {
+    background-color: #6b5b47;
+}
+.nav-button:disabled {
+    background-color: #d4c3a3;
+    cursor: not-allowed;
+}
+.page-number {
+    font-size: .9rem;
+    color: #6b5b47;
+}
+@media (max-width:768px) {
+    .book-container {
+    height: 90vh;
+}
+h1 {
+    font-size: 1.5rem;
+}
+.subheading {
+    font-size: .9rem;
+}
+.content {
+    font-size: 1rem;
+}
+.nav-button {
+    padding: 6px 12px;
+    font-size: .9rem;
+}
+}@media (max-width:480px) {
+    .book-container {
+    height: 95vh;
+}
+.page-content {
+    padding: 15px;
+}
+h1 {
+    font-size: 1.3rem;
+}
+.content {
+    font-size: .95rem;
+}
+.nav-button {
+    padding: 5px 10px;
+    font-size: .8rem;
+}
+}#google_translate_element {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 0!important;
+    z-index: 1000;
+    display: none!important;
+}
+img {
+    margin: 10px!important;
+    object-fit: contain;
+}
+.goog-te-menu-value, .goog-te-menu, .goog-te-banner-frame, .goog-te-menu2, .goog-te-menu2-frame {
+    display: none!important;
+}
+.goog-te-gadget-simple {
+    display: inline!important;
+}
+h2{
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    align-self: center;
+    margin-top: 40vh;
+    margin-bottom: 40vh;
+    font-size: 50px;
+}
+    </style>
+</head>
+<body>
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'bn',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+    
+    <div class="book-container" id="book">
+        <h2>রাম নারায়ণ রাম</h2>
+    </div>
+
+    <script>
+        const bookTitle = "কি? কেন? কোথায়?";
+        const bookSubheading = "গাড়োয়ান (09/11/1965)";
+        let bookContent = `প্রশ্নকারী—ঠাকুর, ‘কড়া চাবুক' নামকরণের সার্থকতা কি? আমাদের খুব জানতে ইচ্ছে করে। আপনি কৃপা করে বললে আমরা সবাই জানতে ও বুঝতে পারি।
+
+ঠাকুর―জন্ম-মৃত্যুর রহস্য নিয়েই জগৎ। যতদিন বেঁচে থাকবো, সংগ্রাম করেই বেঁচে থাকতে হবে। প্রতি মুহূর্তে যুদ্ধ করে বেঁচে থাকতে হলে যথোপযুক্ত হাতিয়ার চাই। কিন্তু একটু লক্ষ্য করলেই দেখা যাবে―প্রকৃতির দয়ায় আমরা সে অভাব থেকে মুক্ত। আত্মরক্ষার জন্য দেহের অঙ্গপ্রত্যঙ্গ এমনভাবে প্রকৃতি সাজিয়ে দিয়েছেন যে তা প্রয়োজনের পক্ষে যথেষ্ট। রোগের সঙ্গে যুদ্ধ করার জন্য অফুরন্ত ব্যবস্থা রয়েছে প্রকৃতির ভাণ্ডারে। ইন্দ্রিয় যন্ত্রগুলো যেমন দেহরক্ষার জন্য, সেইরূপ মনের বিকৃতির দিকটা ঠিক রাখবার জন্য বিবেক―তাও প্রকৃতির নিয়মেই। বিবেক চাবুকের মত যন্ত্রস্বরূপ, যন্ত্রের মতই কাজ করে।
+
+তাই চাবুক শুধু বেত, দড়ি বা চামড়া দিয়েই তৈরী হয় না। প্রকৃতির স্বাভাবিক নিয়মে অনেক জন্তুরই পিছনে চাবুক দেওয়া আছে, মানে লেজ আছে। সেই লেজ দিয়েই চাবুক তৈরী হয়। আবার লেজ স্বাভাবিকভাবেই লেজের কাজ করে। এই লেজ দিয়ে যেমন অন্যকে তারা চাবুক মারে আবার প্রয়োজনবোধে নিজের গায়েও মারতে দ্বিধা করে না। উপদ্রব থেকে রক্ষা পাওয়ার জন্য চাবুক চালাতেই হবে―তা নিজের পিঠেই পড়ুক, আর অপরের পিঠেই পড়ুক—চিন্তা করলে চলবে না।
+
+বিশ্বের বেশীর ভাগ জন্তুরই প্রকৃতির দানে চাবুক আছে। এই চাবুকের ক্রিয়া চলেছে শুধু লেজের দ্বারা নয়—হাত, পা, নখ, মুখ, চোখ, দাঁত এবং শিং-এর দ্বারা। এইগুলি প্রকৃতিরই দান। তাই এর ব্যবহার করার অর্থ হ'ল প্রকৃতির ইচ্ছাকেই মান্য করা। ভারত ধর্মপ্রাণ দেশ। ধর্মের নীতি পালন করাই আমাদের নীতি। তাই প্রকৃতির আশীর্বাদ স্বরূপ লেজটি সামনে বাড়িয়ে দিয়ে আত্মরক্ষা করলে নীতিভ্ৰষ্ট হবে না, বলাই বাহুল্য। পাড়াগায়ে গোসাপের কথা মনে পড়ছে। সে তার লেজের ঝাপটা মেরে আক্রমণকারী কুকুরদের স্তব্ধ করে বেড়িয়ে যেত৷ জানোয়ার ও অপরাধীকে চাবুক মেরে মেরে ঠিক রাখাই রীতি।
+
+সদুপদেশ দেওয়াও মিষ্টি চাবুক। যখন গরু, ঘোড়া বা কুকুরকে আদর করা হয়, তারা আনন্দে লেজ নাড়তে থাকে। আদরকারীর পিঠেও লেজ বুলিয়ে আদরের উত্তরটি দেয়। উপদেশও এরূপ চাবুক নেড়ে নেড়ে বুঝিয়ে দেওয়া। চাবুক শুধু লাঠি নয়, চাবুক শুধু গালি নয়, চোখ রাঙ্গানিও চাবুক। বাঘের চোখে চোখ রেখে চোখ রাঙ্গালেও চাবুকের কাজ হয়। এই রকম এখানে চোখ রাঙ্গিয়েও আমরা অনেক কাজ করে থাকি। বিশেষ বিশেষ ক্ষেত্রে প্রতিটি অঙ্গগুলিও চাবুকের কাজ করে যাচ্ছে। আমরা চটলে আঙ্গুল নেড়ে বা দেখিয়ে সতর্ক করে দিই। সেটাও কি চাবুকের চেয়ে কম? মুখ বিকৃত করে, ভ্রূ-কুঞ্চিত করে, মুখ গম্ভীর করে, আক্কেল দেওয়া যায়। সেটাও তো চাবুকের কাজই করে। কথার কাটাকাটা জবাব―তাও তো চাবুক ছাড়া নয়। শাসকের দণ্ডেও চাবুক, স্নেহের বন্ধনেও চাবুক। চাবুক নাই কোথায়? শিবের ত্রিশূলে, শিবানীর খড়্গে, চক্রধারীর চক্রে, ইন্দ্রের বজ্রে, যমের পাশে, রামের ধনুতে, হলধারীর হলে, ভীমের গদায়, অর্জুনের গাণ্ডীবে, দণ্ডী সন্ন্যাসীর দণ্ডে—প্রায় সর্বত্রই তো দেখতে পাচ্ছি চাবুক।
+
+হনুমানের লেজের চাবুক দিয়ে অত্যাচারী রাবণকে ধ্বংস করা হয়েছিল। অন্যায়কে ধ্বংস করে ন্যায়ের প্রতিষ্ঠা করলো হনুমানেরই লেজের চাবুক এবং রাম রাজত্ব হনুমানের চাবুকেই প্রতিষ্ঠিত। মহাত্মাজীর স্বপ্নের রামরাজত্ব যদি ফিরিয়ে আনতে হয়, এবং প্রতিষ্ঠা করতে হয়, তবে হনুমানের রামানুগত প্রাণের মত আমাদের দেশানুগত প্রাণ হতে হবে। এই রামরাজ্য প্রতিষ্ঠার জন্য হনুমানের চাবুকের মত ’কড়াচাবুক’ই আমাদের দরকার। একটা আমূল পরিবর্তনের জন্য প্রয়োজন ‘কড়া চাবুকে'র । অন্যায়কে ন্যায়ের পথে নিতে হলে 'কড়া চাবুকে'রই প্রয়োজন। তাই চাবুকের সংগ্রাম ন্যায়ের সংগ্রাম। অন্যায় যেখানে, সেখানেই চাবুক, সেখানেই ‘কড়া চাবুক'। তাই বলতে পার, 'কড়া চাবুক' নামকরণের অন্তরালে অন্তর্নিহিত আছে এক গভীর উদ্দেশ্য ও সুর। আশা করি, সেই তাৎপর্যটি বুঝে নিতে এবার আর কারও অসুবিধা হবে না।`;
+
+
+        bookContent = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+bookContent;
+        let currentPage = 0;
+        let pages = [];
+
+
+function createPages() {
+    const book = document.getElementById('book');
+    book.innerHTML = '';
+    pages = [];
+
+
+    const paragraphs = bookContent.split('\n\n');
+    let tempBookContent = ""
+
+    paragraphs.forEach((paragraph, index) => {
+        tempBookContent += paragraph + " <br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+    });
+
+    
+
+
+    const words = tempBookContent.split(' ');
+    let currentPageContent = '';
+    const maxHeight = book.clientHeight - 180; // Adjust for header and navigation
+
+    const tempDiv = document.createElement('div');
+    tempDiv.className = 'content';
+    tempDiv.style.position = 'absolute';
+    tempDiv.style.visibility = 'hidden';
+    tempDiv.style.width = `${book.clientWidth - 40}px`; // Account for padding
+    document.body.appendChild(tempDiv);
+
+    words.forEach((word, index) => {
+        let tempWord = word;
+        if(word.charAt(0) == 'h' && word.charAt(1) == 't'){
+            let attr = word.split('|');
+            tempWord = `<img src="${attr[0]}" style="height:${attr[1]}%; width:${attr[2]}%; float:${attr[3]};">`
+        }
+        const testContent = currentPageContent + tempWord + ' ';
+        tempDiv.innerHTML = testContent;
+
+        if (tempDiv.offsetHeight > maxHeight) {
+            pages.push(`<p>${currentPageContent}</p>`);
+            currentPageContent = tempWord + ' ';
+            if(tempWord == "<br><br>"){
+                currentPageContent = '';
+            }
+        } else {
+            currentPageContent = testContent;
+        }
+
+        if (index === words.length - 1) {
+            pages.push(`<p>${currentPageContent}</p>`);
+        }
+    });
+
+    document.body.removeChild(tempDiv);
+    renderPages();
+}
+
+        function renderPages() {
+            const book = document.getElementById('book');
+            book.innerHTML = '';
+
+            pages.forEach((pageContent, index) => {
+                const page = document.createElement('div');
+                page.className = 'page';
+                page.style.zIndex = pages.length - index;
+                
+                const pageFront = document.createElement('div');
+                pageFront.className = 'page-content';
+                
+                const pageBack = document.createElement('div');
+                pageBack.className = 'page-content page-back';
+                
+                const header = document.createElement('div');
+                header.className = 'page-header';
+                header.innerHTML = `
+                    <h1>${bookTitle}</h1>
+                    <div class="subheading">${bookSubheading}</div>
+                `;
+                
+                const content = document.createElement('div');
+                content.className = 'content';
+                content.innerHTML = pageContent;
+
+                const navigation = document.createElement('div');
+                navigation.className = 'navigation';
+                
+                const prevButton = document.createElement('button');
+                prevButton.textContent = 'আগের পৃষ্ঠা';
+                prevButton.className = 'nav-button';
+                prevButton.onclick = () => changePage(index - 1);
+                prevButton.disabled = index === 0;
+
+                const nextButton = document.createElement('button');
+                nextButton.textContent = 'পরের পৃষ্ঠা';
+                nextButton.className = 'nav-button';
+                nextButton.onclick = () => changePage(index + 1);
+                nextButton.disabled = index === pages.length - 1;
+
+                const pageNumber = document.createElement('span');
+                pageNumber.className = 'page-number';
+                pageNumber.textContent = `পৃষ্ঠা ${index + 1} of ${pages.length}`;
+
+                navigation.appendChild(prevButton);
+                navigation.appendChild(pageNumber);
+                navigation.appendChild(nextButton);
+
+                pageFront.appendChild(header);
+                pageFront.appendChild(content);
+                pageFront.appendChild(navigation);
+                
+                page.appendChild(pageFront);
+                page.appendChild(pageBack);
+                book.appendChild(page);
+            });
+
+            updatePagePositions();
+            console.log("Loaded!")
+            document.getElementById('book').style.visibility = 'visible';
+            
+        }
+        function updatePagePositions() {
+            const pageElements = document.querySelectorAll('.page');
+            pageElements.forEach((page, index) => {
+                if (index < currentPage) {
+                    page.classList.add('flipped');
+                } else {
+                    page.classList.remove('flipped');
+                }
+            });
+        }
+
+        function changePage(newPage) {
+            if (newPage >= 0 && newPage < pages.length) {
+                currentPage = newPage;
+                updatePagePositions();
+            }
+        }
+
+        window.addEventListener('load', createPages);
+        window.addEventListener('resize', createPages);
+
+
+    function hideGoogleTranslateElements() {
+        // Wait until the Google Translate elements are loaded
+        const intervalId = setInterval(() => {
+            // Try to find the "Select Language" elements
+            const languageTab = document.querySelector('.goog-te-menu-value');
+            const languageMenu = document.querySelector('.goog-te-menu2');
+            const languageMenuFrame = document.querySelector('.goog-te-menu2-frame');
+            
+            // If the elements are found, hide them
+            if (languageTab && languageMenu && languageMenuFrame) {
+                languageTab.style.display = 'none';
+                languageMenu.style.display = 'none';
+                languageMenuFrame.style.display = 'none';
+                clearInterval(intervalId); // Stop checking once done
+            }
+        }, 100); // Check every 100ms
+    }
+
+    // Initialize Google Translate and then hide the elements
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'bn',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+
+        // Hide elements after initialization
+        setTimeout(hideGoogleTranslateElements, 500); // Delay to ensure elements are fully loaded
+    }
+
+    // Load Google Translate script
+    (function() {
+        var gtScript = document.createElement('script');
+        gtScript.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        document.body.appendChild(gtScript);
+    })();
+
+
+    </script>
+</body>
+</html>
